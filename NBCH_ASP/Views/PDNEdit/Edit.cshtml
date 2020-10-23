@@ -1,0 +1,19 @@
+﻿@model NBCH_ASP.Models.NBCH.PDNEdit.PDNEditEdit
+
+<form method="post">
+
+	@await Component.InvokeAsync("PDNEdit", new {Account1CCode = Model.Account1CCode, canEdit = true})
+	<input type="hidden" asp-for="@Model.Account1CCode" />
+	<input type="hidden" asp-for="@Model.ReportDate" />
+	<div class="row">
+		<div class="col-8">
+			<a asp-action="Index" class="btn btn-outline-dark float-right">Вернуться к списку</a>
+		</div>
+		<div class="col-2">
+			<button type="submit" class="btn btn-outline-danger float-right" asp-route-PDNAccept="true">Принять данные как есть</button>
+		</div>
+		<div class="col-2">
+			<button type="submit" class="btn btn-secondary float-right">Сохранить изменения</button>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,146 @@
+﻿@model AccountReply
+
+<div class="card " >
+	<div class="card-header pt-1 m-0 p-0 @CreditAccount.GetCardHeadStyle(Model.AccountRatingVLF((DateTime)(ViewData["ReportDate"] ?? default)), Model.OwnerIndic)">
+		<div class="row m-0 p-0">
+			<div class="col-2 m-0 p-0">
+				<h6 class="card-header">@CreditAccount.GetAccountAmount(Model)</h6>
+			</div>
+			<div class="col-3 m-0 p-0">
+				<h6 class="card-header"> @Html.Raw(Model.acctTypeText ?? "&nbsp")</h6>
+			</div>
+			<div class="col-2 m-0 p-0">
+				<h6 class="card-header"> @Html.Raw(Model.OwnerIndicText ?? "&nbsp")</h6>
+			</div>
+			<div class="col m-0 p-0">
+				<h6 class="card-header"> @Html.Raw(Model.accountRatingTextVLF((DateTime)(ViewData["ReportDate"] ?? default)) ?? "&nbsp")</h6>
+			</div>
+		</div>
+	</div>
+	<div class="card-body">
+
+
+
+		<div class="row">
+			<div class="col-12 m-0 p-0 input-group">
+				<div class="col-3 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspДата открытия</span>
+					</div>
+					<label disabled class="form-control bg-light">@SOAPNBCH.StringToDateTime(Model.openedDt).ToShortDateString()</label>
+				</div>
+
+				<div class="col-3 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill m-0 p-0">&nbspФинальный платеж</span>
+					</div>
+					<label disabled class="form-control bg-light">@Html.Raw(SOAPNBCH.StringToDateTime(@Model.paymentDueDate).ToShortDateString() == "01.01.0001" ? "" : SOAPNBCH.StringToDateTime(@Model.paymentDueDate).ToShortDateString())</label>
+				</div>
+
+				<div class="col-3 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspДата статуса</span>
+					</div>
+					<label disabled class="form-control bg-light">@SOAPNBCH.StringToDateTime(Model.accountRatingDate).ToShortDateString()</label>
+				</div>
+
+				<div class="col-3 input-group m-0 p-0">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspДата обновления</span>
+					</div>
+					<label disabled class="form-control bg-light">@SOAPNBCH.StringToDateTime(Model.lastUpdatedDt).ToShortDateString()</label>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-12 m-0 p-0 input-group mt-1">
+				<div class="col-3 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspСроч.зад.осн.долг</span>
+					</div>
+					<input disabled class="form-control bg-light" type="text" value="@CreditAccount.NumberStringWithSpace(Model.principalOutstanding ?? "0")" />
+				</div>
+
+				<div class="col-3 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill m-0 p-0">&nbspЗадолж-сть</span>
+					</div>
+					<label disabled class="form-control bg-light">@CreditAccount.NumberStringWithSpace(Model.amtOutstanding ?? "0")</label>
+
+				</div>
+
+				<div class="col-3 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspВсего выплачено</span>
+					</div>
+					<label disabled class="form-control bg-light">@CreditAccount.NumberStringWithSpace(Model.curBalanceAmt ?? "0")</label>
+				</div>
+
+				<div class="col-3 input-group m-0 p-0">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspПСК</span>
+					</div>
+					<label disabled class="form-control bg-light">@CreditAccount.NumberStringWithSpace(Model.creditTotalAmt, true)</label>
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+
+
+
+		<div class="row">
+			<div class="col-12 m-0 p-0 input-group mt-1">
+				<div class="col-3 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0 @HelperASP.NegativeLabel(int.Parse(Model?.amtPastDue ?? "0"))">&nbspПросрочено</span>
+					</div>
+					<label disabled class="form-control bg-light @HelperASP.NegativeLabel(int.Parse(Model?.amtPastDue ?? "0"))">@CreditAccount.NumberStringWithSpace(Model.amtPastDue ?? "0")</label>
+				</div>
+
+				<div class="col-3 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill m-0 p-0">&nbspСлед.платеж</span>
+					</div>
+					<label disabled class="form-control bg-light">@CreditAccount.NumberStringWithSpace(Model.termsAmt ?? "0")</label>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<div class="card-footer">
+		@await Html.PartialAsync("_AccountPDN", PDN.CreatePDNObgect(Model, (DateTime)(ViewData["ReportDate"] ?? default)))
+
+		<div class="row d-inline-flex">
+			@{
+				SortedDictionary<DateTime, AccountReply.AccountStatus> history = Model.GetAccountHistory();
+				if (history != default) {
+					foreach (KeyValuePair<DateTime, AccountReply.AccountStatus> item in history) {
+						string month = String.Format("{0:MMMM}", item.Key)[0].ToString();
+						month = item.Key.Month == 1 ? String.Format("{0:yy}", item.Key) : month;
+						<div class="col m-0 p-0 mr-1">
+							<img src="~/picture/@((char)item.Value).png" width="16" height="16">
+							<br />
+							<span class="text-sm-center">@month</span>
+						</div>
+					}
+				}
+			}
+		</div>
+
+
+	</div>
+
+
+</div>
+

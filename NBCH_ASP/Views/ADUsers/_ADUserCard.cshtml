@@ -1,0 +1,29 @@
+﻿@model ADUserMVC
+<div class="col-7">
+	<div class="card">
+		<div class="card-header">
+			<h5>Имя пользователя</h5>
+			<input type="text" class="form-control " asp-for="@Model.ADUser.ADName">
+		</div>
+		<div class="card-body">
+			<div class="row">
+				Регионы
+			</div>
+			<div class="row  ml-2">
+				<div class="form-check">
+					@for (int regionIndex = 0; regionIndex < (Model?.Regions?.Count() ?? 0); regionIndex++) {
+						<div class="row">
+							<input class="form-check-input" asp-for="@Model.Regions[regionIndex].Checked" type="checkbox">
+							<label class="form-check-label" asp-for="@Model.Regions[regionIndex].Checked">@Model.Regions[regionIndex].Name</label>
+							<input type="hidden" asp-for="@Model.Regions[regionIndex].ID">
+							<input type="hidden" asp-for="@Model.Regions[regionIndex].Name">
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+		<div class="card-footer m-0 p-0">
+			<button type="submit" class="btn btn-outline-dark float-right" asp-action="AddADUser">Добавить</button>
+		</div>
+	</div>
+</div>

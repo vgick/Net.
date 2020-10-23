@@ -1,0 +1,32 @@
+﻿@using NBCH_ASP.Controllers.NBCH
+@model NBCH_ASP.Models.NBCH.SearchClient.SearchClientModel
+
+<form method="post">
+	<div class="row">
+		<div class="col-2 m-0 p-0" id="credit_history">
+		</div>
+		<div class="col-10 m-0 p-0">
+			<div class="row">
+				<div class="col-12 m-0 p-0">
+					<div class="input-group">
+						<div class="input-group-prepend col-2 m-0 p-0">
+							<span class="input-group-text flex-fill">ФИО клиента</span>
+						</div>
+						<input class="form-control " type="text" asp-for="@Model.SearchString" />
+						<button type="submit"
+								class="form-control btn btn-secondary col-2"
+								asp-action="Index" asp-controller="@HelperASP.ControllerNameFromClass(typeof(SearchClientController))">
+							Найти
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 mt-5 m-0 p-0">
+					@await Html.PartialAsync("_ClientList", Model?.SearchClientList ?? new SearchClientList[0])
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+

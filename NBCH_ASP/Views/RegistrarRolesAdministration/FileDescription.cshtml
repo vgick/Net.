@@ -1,0 +1,88 @@
+﻿@model NBCH_ASP.Models.Registrar.RegistrarRolesAdministration.RegistrarRolesAdministrationIndex
+
+
+<form method="post" asp-action="FileDescription">
+	<input type="hidden" asp-for="@Model.DocumentGroup">
+	<div class="row">
+		<div class="col-3">
+			<div class="btn-group-vertical">
+				@foreach (string role in Model.Documents) {
+					<button
+					 
+						type="submit"
+						value="@RegistrarRolesAdministrationController.GetDirectoryInfo"
+						name="SubmitType"
+						asp-action="FileDescription"
+						asp-route-SelectedDocument="@role"
+						class="btn @Html.Raw(((string)ViewData["SelectedDocument"] ?? "").Equals(role) ? "btn-info" : "btn-outline-info")">@role
+					</button>
+				}
+				<a asp-route-DocumentGroup="@Model.DocumentGroup"
+					class="btn btn-outline-dark"
+					asp-action="AddFileDescription">Добавить описание файла
+				</a>
+			</div>
+		</div>
+		<div class="col-3">
+			<div class="row">
+				<div class="col-12">
+					<fieldset style="border : groove">
+						<legend>Права на чтение</legend>
+						@for (int index = 0; index < Model.ADRolesVLF.Length; index++) {
+							<div class="row ml-0">
+								<div class="col input-group ml-2">
+									<input type="checkbox"
+										   checked="@Model.ReadADRoles.Contains(Model.ADRolesVLF[index].Name)"
+										   name="ReadADRolesVLF"
+										   value="@Model.ADRolesVLF[index].Name"
+										   class="form-check-input" />
+									<span for="@Html.Raw($"ReadADRolesVLF{index}")" class="form-check-label" style="font-family: monospace">
+										@Model.ADRolesVLF[index].Description
+									</span>
+								</div>
+							</div>
+						}
+					</fieldset>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 mt-4">
+					<fieldset style="border : groove">
+						<legend>Права на добавление</legend>
+						@for (int index = 0; index < Model.ADRolesVLF.Length; index++) {
+							<div class="row ml-0">
+								<div class="col input-group ml-2">
+									<input type="checkbox"
+										   checked="@Model.WriteADRoles.Contains(Model.ADRolesVLF[index].Name)"
+										   name="WriteADRolesVLF"
+										   value="@Model.ADRolesVLF[index].Name"
+										   class="form-check-input" />
+									<span for="@Html.Raw($"WriteADRolesVLF{index}")" class="form-check-label" style="font-family: monospace">
+										@Model.ADRolesVLF[index].Description
+									</span>
+								</div>
+							</div>
+						}
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="row mt-2">
+		<div class="col-6">
+			<button
+				type="submit"
+				asp-action="FileDescription"
+				name="SubmitType"
+				asp-route-SelectedDocument=@ViewData["SelectedDocument"]
+				class="btn btn-secondary float-right"
+				value="@RegistrarRolesAdministrationController.UpdateDirectoryInfo">Записать
+			</button>
+		</div>
+	</div>
+
+
+</form>

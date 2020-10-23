@@ -1,0 +1,26 @@
+﻿@model SearchClientList[]
+
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>ФИО</th>
+			<th>Дата рождения</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (SearchClientList client in Model) {
+			@*<tr onclick="location.href = '@Url.Action("GetCHByClient", Helper.ControllerNameFromClass(typeof(ArchiveCHController)), new { Client1CCode = client.ClientID1C})'" style="cursor: pointer">*@
+			<tr data-client-1c-code="@client.ClientID1C" class="client-clickable-row" style="cursor: pointer">
+				<td>
+					@client.FIO
+				</td>
+				<td>
+					@client.BirthDate.ToShortDateString()
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+<script src="~/js/search_client.js" asp-append-version="true"></script>

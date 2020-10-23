@@ -1,0 +1,21 @@
+﻿@model NBCH_ASP.Models.NBCH.PDNComponent.PDNDataView
+
+<div class="card">
+	<div class="card-header">
+		<h4>Расчет ПДН</h4>
+	</div>
+	<div class="card-body">
+	<span class="text-danger">@Model.Message</span>
+	@if (Model?.PDNInfoList != default){
+		@foreach (PDN pdnData in Model.PDNInfoList.PDNNonCards) {
+			@await Html.PartialAsync("_AccountPDN", pdnData);
+		}
+		@foreach (PDN pdnData in Model.PDNInfoList.PDNCards) {
+			@await Html.PartialAsync("_AccountPDN", pdnData);
+		}
+	}
+	</div>
+	<div class="card-footer">
+
+	</div>
+</div>

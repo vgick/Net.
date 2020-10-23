@@ -1,0 +1,103 @@
+﻿@model KeyValuePair<Client, RegistrarDocument[]>
+<div class="text-danger">
+	@ViewData["Error"]
+</div>
+
+
+<div name="div0" id="@Html.Raw($"reg_documents_{Model.Key.Code1C}_{ViewData["Account1CCode"]}")">
+	<div class="card mt-5">
+		<div class="card-header bg-secondary text-white">
+			<h4>@Model.Key.FIO</h4><h5>@Model.Key.AffiliationOfAccount.GetDescription()</h5>
+		</div>
+		<div class="card-body bg-light">
+			@foreach (RegistrarDocument document in Model.Value) {
+				<div class="row">
+					<div class="col-12">
+						<h5 class="@Html.Raw((document.Files?.Count ?? 0) == 0 ? "text-danger" : "")">@document.FileDescription</h5>
+						@if (document.Files.Count > 0) {
+							<table class="table table-hover table-striped">
+								<thead>
+									<tr class="d-flex">
+										<th class="col-4">Имя файла</th>
+										<th class="col-2 text-center">Дата загрузки</th>
+										<th class="col-4 text-center">Автор</th>
+										<th class="col-1">Скачать</th>
+										<th class="col-1">Удалить</th>
+										@*<th>Открыть</th>*@
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (RegistrarFile file in document.Files) {
+										<tr class="d-flex">
+											<td class="col-4">@file.FileName</td>
+											<td class="col-2 text-center">@file.UploadDate</td>
+											<td class="col-4 text-center">@file.AuthorName</td>
+											<td class="col-1"><button class="btn btn-sm btn-outline-secondary" asp-action="DownloadFile" asp-route-idFile="@file.ID">Скачать</button></td>
+											<td class="col-1">
+												<label style="cursor:pointer"
+													   @Html.Raw(document.WriteAccess ? "" : "disabled") class="btn btn-sm btn-outline-danger"
+													   id='@Html.Raw($"delete_button_{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}_{file.ID}")'
+													   name='@Html.Raw($"delete_button_{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}_{file.ID}")'
+													   data-id-file="@file.ID"
+													   data-client-1c-code="@Model.Key.Code1C"
+													   data-account-1c-code="@ViewData["Account1CCode"]"
+													   data-affiliation-account="@Model.Key.AffiliationOfAccount"
+													   onclick='DeleteFile(@Html.Raw($"delete_button_{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}_{file.ID}"),
+												@file.ID,
+												@Html.Raw($"reg_documents_{Model.Key.Code1C}_{ViewData["Account1CCode"]}"),
+												@Html.Raw($"error_message{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}"))'>
+													Удалить
+												</label>
+											</td>
+											@*<td><button class="btn btn-sm btn-outline-secondary" onclick="downloadFile()">Открыть</button></td>*@
+										</tr>
+									}
+
+								</tbody>
+							</table>
+						}
+					</div>
+				</div>
+				@if (document.WriteAccess) {
+					<div class="row mt-2">
+						<div class="col input-group">
+							<div class="input-group-prepend float-right">
+								<span class="input-group-text">Загрузить файлы на сервер</span>
+							</div>
+							<input class="btn btn-outline-secondary btn-sm upload-documents-button"
+								   type="file"
+								   id='@Html.Raw($"files{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}")'
+								   name='@Html.Raw($"files{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}")'
+								   size="1" multiple
+								   data-file-description="@document.ID"
+								   data-client-1c-code="@Model.Key.Code1C"
+								   data-account-1c-code="@ViewData["Account1CCode"]"
+								   data-affiliation-account="@Model.Key.AffiliationOfAccount"
+								   onchange='uploadFiles(@Html.Raw($"files{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}"),
+								@Html.Raw($"reg_documents_{Model.Key.Code1C}_{ViewData["Account1CCode"]}"),
+								@Html.Raw($"spin_{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}"),
+								@Html.Raw($"error_message{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}"))' />
+							<div class="spinner-grow" role="status" id="@Html.Raw($"spin_{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}")" style="visibility:hidden">
+								<span class="sr-only">Loading...</span>
+							</div>
+
+						</div>
+					</div>
+					<div id="@Html.Raw($"error_message{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}")"></div>
+
+
+					@*<div class="alert alert-danger alert-dismissible fade show" role="alert" id="@Html.Raw($"error_message{document.ID}_{Model.Key.Code1C}_{ViewData["Account1CCode"]}")" style="visibility:hidden">
+							<strong>Ошибка загрузки!</strong>Файл не был загружен на сервер. Вы можете повторить попытку.
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>*@
+
+				}
+				<hr>
+			}
+		</div>
+	</div>
+
+	<script src="~/js/registrar-client-documents.js" asp-append-version="true"></script>
+</div>

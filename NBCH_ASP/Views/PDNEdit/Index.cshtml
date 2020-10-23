@@ -1,0 +1,28 @@
+﻿@model PDNErrorAccountInfo[]
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>
+				Номер договора
+			</th>
+			<th>
+				Действие
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (int rowIndex = 0; rowIndex < Model.Length; rowIndex++) {
+			<tr>
+				<td>@Model[rowIndex].Account1CCode</td>
+				<td>
+					<a class="btn border-0 btn-outline-secondary"
+						asp-action="Edit"
+						asp-route-ReportDate="@Model[rowIndex].ReportDate"
+						asp-route-CreditHistoryID="@Model[rowIndex].CreditHistoryID"
+						asp-route-Account1CCode="@Model[rowIndex].Account1CCode">Редактировать</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

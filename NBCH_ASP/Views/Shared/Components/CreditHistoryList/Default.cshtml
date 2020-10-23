@@ -1,0 +1,15 @@
+﻿@using NBCH_ASP.Controllers.NBCH
+@model CreditHistoryInfo[]
+<div class="btn-group-vertical">
+	@foreach (CreditHistoryInfo creditHistory in Model ?? new CreditHistoryInfo[0]) {
+		<a class="btn btn-sm @{
+				@Html.Raw((string)ViewData["SelectedCreditHistoryID"] == creditHistory?.CreditHistoryID.ToString() ? " btn-info " : " btn-light ");
+				@Html.Raw(creditHistory?.ErrorText != default ? " text-danger " : "");
+			}"
+		   asp-action="GetCh"
+		   asp-controller="@HelperASP.ControllerNameFromClass(typeof(ArchiveCHController))"
+		   asp-route-CreditHistoryID="@creditHistory.CreditHistoryID">
+			@Html.Raw(creditHistory.Date)
+		</a>
+	}
+</div>

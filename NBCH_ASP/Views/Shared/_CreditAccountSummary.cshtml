@@ -1,0 +1,36 @@
+﻿@model Calc
+
+
+<div class="row">
+	<div class="col-12  input-group">
+		<div class="col-3 input-group m-0 p-0 pr-1">
+			<div class="input-group-prepend col-6 m-0 p-0">
+				<span class="input-group-text flex-fill p-0 p-0">&nbspВсего</span>
+			</div>
+			<label disabled class="form-control bg-light">@Html.Raw(Model?.totalAccts ?? "0")</label>
+		</div>
+
+		<div class="col-3 input-group m-0 p-0 pr-1">
+			<div class="input-group-prepend col-6 m-0 p-0">
+				<span class="input-group-text flex-fill m-0 p-0 @HelperASP.NegativeLabel(int.Parse(Model?.negativeRating ?? "0"))">&nbspНегативных</span>
+			</div>
+			<label disabled class="form-control bg-light @HelperASP.NegativeLabel(int.Parse(Model?.negativeRating ?? "0"))">@Html.Raw(Model?.negativeRating ?? "0")</label>
+		</div>
+
+		<div class="col-3 input-group m-0 p-0 pr-1">
+			<div class="input-group-prepend col-6 m-0 p-0">
+				<span class="input-group-text flex-fill p-0 p-0">&nbspОткрытых</span>
+			</div>
+			<label disabled class="form-control bg-light">@Html.Raw(Model?.totalActiveBalanceAccounts ?? "0")</label>
+		</div>
+
+		<div class="col-3 input-group m-0 p-0">
+			<div class="input-group-prepend col-6 m-0 p-0">
+				<span class="input-group-text flex-fill p-0 p-0 @HelperASP.NegativeLabel(int.Parse(Model?.totalBankruptcies ?? "0"))">&nbspБанкротсво</span>
+			</div>
+			<label disabled class="form-control bg-light @HelperASP.NegativeLabel(int.Parse(Model?.totalBankruptcies ?? "0"))">@Html.Raw(Model?.totalBankruptcies ?? "0")</label>
+		</div>
+
+	</div>
+
+</div>

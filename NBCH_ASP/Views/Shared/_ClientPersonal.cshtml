@@ -1,0 +1,104 @@
+﻿@model NBCH_ASP.Models.NBCH.ClientPersonalInfo
+
+<h3>Клиент</h3>
+<div class="row">
+	<div class="col-12">
+		<div class="input-group m-0 mt-1 p-0">
+			<div class="input-group-prepend col-2 m-0 p-0">
+				<span class="input-group-text flex-fill">Фамилия</span>
+			</div>
+			<input class="form-control mr-2" type="text" asp-for="@Model.PersonReq.LastName" />
+			<div class="input-group-prepend col-2 m-0 p-0">
+				<span class="input-group-text flex-fill">Имя</span>
+			</div>
+			<input class="form-control mr-2" type="text" asp-for="@Model.PersonReq.FirstName" />
+			<div class="input-group-prepend col-2 m-0 p-0">
+				<span class="input-group-text flex-fill">Отчество</span>
+			</div>
+			<input class="form-control" type="text" asp-for="@Model.PersonReq.SecondName" />
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<div class="input-group m-0 mt-2 p-0">
+			<div class="input-group-prepend col-2 m-0 p-0">
+				<span class="input-group-text flex-fill">Место рождения</span>
+			</div>
+			<input class="form-control mr-1" type="text" asp-for="@Model.PersonReq.BirthPlace" />
+			<div class="input-group-prepend col-2 m-0 p-0">
+				<span class="input-group-text flex-fill ml-1">Дата рождения</span>
+			</div>
+			<input class="form-control" type="date" asp-for="@Model.PersonReq.BirthDateTime" />
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
+		<input type="hidden" asp-for="@Model.IdReq.DocumentType">
+		<div class="input-group m-0 mt-1 p-0">
+			<div class="input-group-prepend col-2 m-0 p-0">
+				<span class="input-group-text flex-fill">Серия паспорта</span>
+			</div>
+			<input class="form-control mr-1" type="text" asp-for="@Model.IdReq.DocumentSeries" />
+			<div class="input-group-prepend col-2 m-0 p-0">
+				<span class="input-group-text flex-fill ml-1">Номер паспорта</span>
+			</div>
+			<input class="form-control" type="text" asp-for="@Model.IdReq.DocumentNumber" />
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
+		<div class="input-group m-0 mt-1 p-0">
+			<div class="input-group-prepend col-2 m-0 p-0">
+				<span class="input-group-text flex-fill">Место выдачи</span>
+			</div>
+			<input class="form-control mr-1" type="text" asp-for="@Model.IdReq.IssueAuthority" />
+			<div class="input-group-prepend col-2 m-0 p-0">
+				<span class="input-group-text flex-fill ml-1">Дата выдачи</span>
+			</div>
+			<input class="form-control" type="date" asp-for="@Model.IdReq.issueDateDateTime" />
+		</div>
+	</div>
+</div>
+
+@if (Model != default && Model.AddressReq != default) {
+	<h3 class="mt-4">Адреса</h3>
+}
+<div class="m-0 mt-1 p-0 row">
+	@if (Model != default && Model.AddressReq != default) {
+		for (int i = 0; i < Model.AddressReq.Length; i++) {
+
+	<input type="hidden" asp-for="@Model.AddressReq[i].AddressType">
+	<div class="col-6 m-0 p-0 pt-2 pr-1 pl-1">
+		<div class="card">
+			<div class="card-header">
+				<span class="h6">@Html.Raw(((AddressType)Int32.Parse(Model.AddressReq[i].AddressType)).GetDescription())</span>
+			</div>
+			<div class="card-body">
+				<div class="input-group m-0 mt-1 p-0">
+					<div class="input-group-prepend col-4 m-0 p-0">
+						<span class="input-group-text flex-fill">Город</span>
+					</div>
+					<input class="form-control" type="text" asp-for="@Model.AddressReq[i].City" />
+				</div>
+				<div class="input-group m-0 mt-1 p-0">
+					<div class="input-group-prepend col-4 m-0 p-0">
+						<span class="input-group-text flex-fill">Улица</span>
+					</div>
+					<input class="form-control" type="text" asp-for="@Model.AddressReq[i].Street" />
+				</div>
+				<div class="input-group m-0 mt-1 p-0">
+					<div class="input-group-prepend col-4 m-0 p-0">
+						<span class="input-group-text flex-fill">Номер дома</span>
+					</div>
+					<input class="form-control" type="text" asp-for="@Model.AddressReq[i].HouseNumber" />
+				</div>
+			</div>
+		</div>
+	</div>
+		}
+	}
+</div>

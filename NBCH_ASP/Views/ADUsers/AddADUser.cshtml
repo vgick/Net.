@@ -1,0 +1,7 @@
+﻿@model  ADUserMVC
+@{Layout = "_LayoutAdmin";}
+@{ViewData["SelectedMenuItem"] = "ADUsersList";}
+<form method="post">
+	@await Html.PartialAsync("_ADUserCard", @Model)
+</form>
+

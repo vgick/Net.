@@ -1,0 +1,10 @@
+﻿@model Region[]
+@{Layout = "_LayoutAdmin";}
+@{ViewData["SelectedMenuItem"] = "RegionsList";}
+
+
+@if (Model != default){
+	@foreach (Region region in Model) {
+@* 		@await Html.PartialAsync("_RegionCard", region) *@
+	}
+}

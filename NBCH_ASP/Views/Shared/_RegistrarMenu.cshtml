@@ -1,0 +1,5 @@
+﻿@using NBCH_ASP.Infrastructure.Registrar
+<div class="btn-group-vertical">
+	<a class="btn btn-outline-secondary @RegistrarMenu.GetArchiveItemStatus(ViewContext)" asp-controller="RegistrarDocuments" asp-action="Index">Архив</a>
+	<a class="btn btn-outline-secondary @RegistrarMenu.GetDepartmentReportItemStatus(ViewContext)" asp-controller="RegistrarDepartmentReport" asp-action="Index">Отчет руководителя</a>
+</div>

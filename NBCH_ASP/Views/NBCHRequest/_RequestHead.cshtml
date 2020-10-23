@@ -1,0 +1,39 @@
+﻿@using NBCH_ASP.Controllers.NBCH
+@using NBCH_ASP.Models.NBCH
+@using NBCH_ASP.Models.NBCH.NBCHRequest
+@model NBCH_ASP.Models.NBCH.NBCHRequest.IndexModel
+
+<div class="row">
+	<div class="input-group m-0 p-0">
+		<div class="input-group m-0 p-0 col-7">
+			<div class="input-group-prepend col-4 m-0 p-0">
+				<span class="input-group-text flex-fill p-0 m-0">&nbsp;Договор в 1С&nbsp;</span>
+			</div>
+			<input class="form-control col-4" type="text" asp-for="@Model.Account1CCode" name="Account1CCode" />
+			<button type="submit"
+					class="form-control btn btn-secondary col-4"
+					asp-action="Index" asp-controller="@HelperASP.ControllerNameFromClass(typeof(NBCHRequestController))"
+					value="@IndexModel.SubmitType.GetFrom1C.ToString()"
+					name="submit">
+				заполнить из 1С
+			</button>
+		</div>
+		<div class="col-5 input-group">
+			<div class="input-group-prepend m-0 p-0">
+				<span class="input-group-text flex-fill p-0 m-0">&nbsp;Основной сервер&nbsp;</span>
+			</div>
+			@Html.DropDownList("RegionWebServiceListName", Model.RegionsWebServiceListName ?? new SelectList(""), new { @class = "form-control" })
+		</div>
+	</div>
+</div>
+<div class="row mt-5">
+	<div class="col-12">
+		@await Component.InvokeAsync("AccountList", new {region = Model.RegionsWebServiceListName.SelectedValue, accountStatus = new SOAP1C.AccountStatus[] { SOAP1C.AccountStatus.Verification, SOAP1C.AccountStatus.CheckSB } })
+	</div>
+</div>
+<div class="row">
+	<div class="col mt-4 m-0 p-0">
+		@await Html.PartialAsync("_ClientPersonal", Model?.ClientPersonalInfo ?? new ClientPersonalInfo())
+	</div>
+</div>
+

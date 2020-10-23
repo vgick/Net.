@@ -1,0 +1,96 @@
+﻿@model PDN
+
+@if ((Model?.Errors?.Count() ?? 0) > 0) {
+	@foreach (string error in Model.Errors) {
+		<span class="text-danger">@error</span>
+		<br />
+	}
+}
+
+@if (Model != default) {
+	PDNCard pdnCard = Model as PDNCard;
+	if (pdnCard != default) {
+		<div class="row">
+
+			<div class="col-12 m-0 p-0 input-group">
+				<div class="col-4 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspРазмер лимита (СРЗ)</span>
+					</div>
+					<label disabled class="form-control bg-light">@pdnCard.CreditLimit</label>
+				</div>
+
+				<div class="col-4 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill m-0 p-0">&nbspЗадолженность</span>
+					</div>
+					<label disabled class="form-control bg-light">@pdnCard.AmtOutstanding</label>
+				</div>
+
+				<div class="col-4 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspПросроченно</span>
+					</div>
+					<label disabled class="form-control bg-light">@pdnCard.AmtPastDue</label>
+				</div>
+
+			</div>
+		</div>
+	}
+
+	PDNNonCard pdnNonCard = Model as PDNNonCard;
+	if (pdnNonCard != default) {
+		<div class="row">
+			<div class="col-12 m-0 p-0 input-group">
+				<div class="col-2 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspРазмер лимита (СРЗ)</span>
+					</div>
+					<label disabled class="form-control bg-light">@pdnNonCard.CreditLimitSrz</label>
+				</div>
+
+				<div class="col-2 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill m-0 p-0">&nbspПолная стоимость (ПСК)</span>
+					</div>
+					<label disabled class="form-control bg-light">@pdnNonCard.PSK</label>
+				</div>
+
+				<div class="col-2 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspДата открытия</span>
+					</div>
+					<label disabled class="form-control bg-light">@pdnNonCard.OpenDate.ToShortDateString()</label>
+				</div>
+
+				<div class="col-2 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspДата фин плат</span>
+					</div>
+					<label disabled class="form-control bg-light">@pdnNonCard.PaymentDueDate.ToShortDateString()</label>
+				</div>
+
+				<div class="col-2 input-group m-0 p-0 pr-1">
+					<div class="input-group-prepend col-6 m-0 p-0">
+						<span class="input-group-text flex-fill p-0 p-0">&nbspПросрочено</span>
+					</div>
+					<label disabled class="form-control bg-light">@pdnNonCard.AmtPastDue</label>
+				</div>
+
+				<div class="col-2 input-group m-0 p-0">
+					<span class="input-group-text flex-fill p-0 p-0">&nbspНет данных СРЗ</span>
+					<input disabled class="form-control bg-light" type="checkbox" checked="@pdnNonCard.NoSrz" />
+				</div>
+
+			</div>
+
+		</div>
+	}
+
+	if (!(Model is PDNNonCard) && !(Model is PDNCard)) {
+		<hr>
+		<span class="text-danger">Новый тип ПДН. Необходимо добавить описание вывода данных</span>
+		<br />
+	}
+}
+

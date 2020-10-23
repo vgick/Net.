@@ -1,0 +1,74 @@
+﻿@model NBCH_ASP.Models.Registrar.RegistrarDepartmentReport.RegistrarDepartmentReportModel
+
+@{
+	Layout = "_LayoutRegistrar";
+	ViewData["RegistrarMenuItem"] = "DepartmentReport";
+}
+
+<form method="post">
+	<div class=" col-12">
+		<div class="row">
+			<div class="col-4">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Период</span>
+					</div>
+					<input type="date" asp-for="DateFrom" class="form-control">
+					<input type="date" asp-for="DateTo" class="form-control">
+				</div>
+			</div>
+
+			<div class="col-5">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Точка выдачи</span>
+					</div>
+					@Html.DropDownList("SellPoint", Model.SellPoints ?? new SelectList(""), new { @class = "form-control" })
+					<input type="submit" class="btn btn-info form-control col-2" value="Выбрать">
+				</div>
+			</div>
+
+			<div class="col-3 input-group">
+				<div class="input-group-prepend m-0 p-0">
+					<span class="input-group-text flex-fill p-0 m-0">&nbsp;Основной сервер&nbsp;</span>
+				</div>
+				@Html.DropDownList("region", Model.RegionsWebServiceListName ?? new SelectList(""), new { @class = "form-control" })
+			</div>
+
+		</div>
+		<div class="row mt-4">
+			<div class="col-12">
+				<table class="table table-hover table-sm">
+					<thead>
+						<tr>
+							<th>Номер договора</th>
+							<th>НБКИ</th>
+							<th>Паспорт</th>
+							<th>Анкета</th>
+							<th>Договор</th>
+							<th>График</th>
+							<th>Доп. согл.</th>
+							<th>Расходник</th>
+							<th>Прочее</th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach (var record in Model.AccountsForCheck) {
+						<tr>
+							<td>@record.Account1CCode</td>
+							<td>@Html.Raw(record.NBCH ? "*" : "НЕТ")</td>
+							<td>@Html.Raw(record.Passport ? "*" : "НЕТ")</td>
+							<td>@Html.Raw(record.Profile ? "*" : "НЕТ")</td>
+							<td>@Html.Raw(record.Contract ? "*" : "НЕТ")</td>
+							<td>@Html.Raw(record.PaymentSchedule ? "*" : "НЕТ")</td>
+							<td>@Html.Raw(record.AddionalAgreement ? "*" : "НЕТ")</td>
+							<td @Html.Raw(record.Cash & !record.CashWarrant ? "class='text-danger font-weight-bold'" : "")>@Html.Raw(record.CashWarrant ? "*" : "НЕТ")</td>
+							<td>@Html.Raw(record.OverScans ? "*" : "НЕТ")</td>
+						</tr>
+					}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</form>

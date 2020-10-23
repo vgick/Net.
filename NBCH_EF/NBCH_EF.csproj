@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20201002012303_MigrateToEFCoreAddQuerysStruct.cs" />
+    <Compile Remove="Migrations\20201002012303_MigrateToEFCoreAddQuerysStruct.Designer.cs" />
+    <Compile Remove="Migrations\20201002043430_test.cs" />
+    <Compile Remove="Migrations\20201002043430_test.Designer.cs" />
+    <Compile Remove="Migrations\20201002075511_MigrateToEFCoreAddQuerysStruct.cs" />
+    <Compile Remove="Migrations\20201002075511_MigrateToEFCoreAddQuerysStruct.Designer.cs" />
+    <Compile Remove="Migrations\20201021060145_AddAccountInspectors.cs" />
+    <Compile Remove="Migrations\20201021060145_AddAccountInspectors.Designer.cs" />
+    <Compile Remove="Migrations\20201021060448_AddAccountInspectors.cs" />
+    <Compile Remove="Migrations\20201021060448_AddAccountInspectors.Designer.cs" />
+    <Compile Remove="Migrations\20201021090919_UpdateInspectingTable.cs" />
+    <Compile Remove="Migrations\20201021090919_UpdateInspectingTable.Designer.cs" />
+    <Compile Remove="Migrations\20201021123527_del.cs" />
+    <Compile Remove="Migrations\20201021123527_del.Designer.cs" />
+    <Compile Remove="Migrations\20201021123651_AddAccountInspectors.cs" />
+    <Compile Remove="Migrations\20201021123651_AddAccountInspectors.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Seq.Extensions.Logging" Version="4.0.2" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NBCH_LIB\NBCH_LIB.csproj" />
+  </ItemGroup>
+
+</Project>

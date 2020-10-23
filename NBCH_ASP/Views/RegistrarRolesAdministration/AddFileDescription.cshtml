@@ -1,0 +1,28 @@
+﻿@model NBCH_ASP.Models.Registrar.RegistrarRolesAdministration.AddFileDescriptionModel
+
+<form method="post">
+	<div class="row">
+		<div class="col-6">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Группа</span>
+				</div>
+				<input disabled class="form-control bg-light" asp-for="@Model.DocumentGroup">
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text" >Описание</span>
+				</div>
+				<input type="text" class="form-control" asp-for="@Model.Description">
+			</div>
+		</div>
+	</div>
+
+	<div class="row mt-2">
+		<div class="col-12">
+			<button type="submit" class="btn btn-secondary float-right">Добавить описание</button>
+		</div>
+	</div>
+</form>

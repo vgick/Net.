@@ -1,0 +1,62 @@
+﻿@using NBCH_ASP.Models.NBCH.NBCHRequest
+@model AccountLegendNResult
+
+@if (Model != default) {
+<div id="account_table">
+	<table class="table table-hover table-sm">
+		<thead>
+			<tr>
+				<th>
+					Номер договора
+				</th>
+				<th>
+					Дата договора
+				</th>
+				<th>
+					ФИО
+				</th>
+				<th>
+					Организация
+				</th>
+				<th>
+					Статус
+				</th>
+				<th>
+					Получить из 1С
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (AccountLegend row in Model.AccountLegends) {
+				<tr data-account-1c-code-selected="@row.doc_number" onclick="account_list_module.SetSelectedAccountID(this)" style="cursor:pointer">
+					<td>
+						@row.doc_number
+					</td>
+					<td>
+						@row.doc_date
+					</td>
+					<td>
+						@row.fio
+					</td>
+					<td>
+						@row.organization_name
+					</td>
+					<td>
+						@row.doc_status
+					</td>
+					<td>
+						<button type="submit"
+								class="form-control btn btn-light"
+								value="@IndexModel.SubmitType.GetFrom1C.ToString()"
+								name="submit">
+							заполнить
+						</button>
+					</td>
+				</tr>
+			}
+
+		</tbody>
+	</table>
+</div>
+}
+<span>@ViewData["Error"]</span>

@@ -1,0 +1,120 @@
+﻿@model NBCH_ASP.Models.NBCH.PDNEditViewComponent.PDNEditViewComponentView
+
+@if (Model.PDNCards.Length > 0) {
+	<div class="card">
+		<div class="card-header">
+			<h5>Карты</h5>
+		</div>
+		<div class="card-body">
+			@for (int cardIndex = 0; cardIndex < Model.PDNCards.Length; cardIndex++) {
+
+				@foreach (string error in Model.PDNCards[cardIndex].Errors ?? new string[0]) {
+					<span class="text-danger">@error</span>
+					<br />
+				}
+
+				<div class="row">
+
+					<div class="col-12 m-0 p-0 input-group">
+						<div class="col-4 input-group m-0 p-0 pr-1">
+							<div class="input-group-prepend col-6 m-0 p-0">
+								<span class="input-group-text flex-fill p-0 p-0">&nbspРазмер лимита (СРЗ)</span>
+							</div>
+							<input disabled="@Model.Disabled" class="form-control bg-light" asp-for="@Model.PDNCards[cardIndex].CreditLimit">
+						</div>
+
+						<div class="col-4 input-group m-0 p-0 pr-1">
+							<div class="input-group-prepend col-6 m-0 p-0">
+								<span class="input-group-text flex-fill m-0 p-0">&nbspЗадолженность</span>
+							</div>
+							<input disabled="@Model.Disabled" type="text" class="form-control bg-light" asp-for="@Model.PDNCards[cardIndex].AmtOutstanding">
+						</div>
+
+						<div class="col-4 input-group m-0 p-0 pr-1">
+							<div class="input-group-prepend col-6 m-0 p-0">
+								<span class="input-group-text flex-fill p-0 p-0">&nbspПросроченно</span>
+							</div>
+							<input disabled="@Model.Disabled" type="text" class="form-control bg-light" asp-for="@Model.PDNCards[cardIndex].AmtPastDue">
+						</div>
+
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+}
+
+
+
+@if (Model.PDNNonCards.Length > 0) {
+<div class="card mt-1">
+	<div class="card-header">
+		<h5>Не карты</h5>
+	</div>
+	<div class="card-body">
+
+		@for (int nonCardIndex = 0; nonCardIndex < Model.PDNNonCards.Length; nonCardIndex++) {
+
+			@foreach (string error in Model.PDNNonCards[nonCardIndex].Errors ?? new string[0]) {
+				<span class="text-danger">@error</span>
+				<br />
+			}
+
+			<div class="row">
+				<div class="col-12 m-0 p-0 input-group">
+					<div class="col-1 input-group m-0 p-0 pr-1">
+						<div class="input-group-prepend col-4 m-0 p-0">
+							<span class="input-group-text flex-fill p-0 p-0">&nbspСРЗ</span>
+						</div>
+						<input disabled="@Model.Disabled" type="text" class="form-control bg-light" asp-for="@Model.PDNNonCards[nonCardIndex].CreditLimitSrz">
+					</div>
+
+					<div class="col-1 input-group m-0 p-0 pr-1">
+						<div class="input-group-prepend col-4 m-0 p-0">
+							<span class="input-group-text flex-fill m-0 p-0">&nbspПСК</span>
+						</div>
+						<input disabled="@Model.Disabled" type="text" class="form-control bg-light" asp-for="@Model.PDNNonCards[nonCardIndex].PSK">
+					</div>
+
+					<div class=" col-2 input-group m-0 p-0 pr-1">
+						<div class="input-group-prepend col-4 m-0 p-0">
+							<span class="input-group-text flex-fill p-0 p-0">&nbspДата откр</span>
+						</div>
+						<input disabled="@Model.Disabled" type="date" class="form-control bg-light m-0 p-0" asp-for="@Model.PDNNonCards[nonCardIndex].OpenDate">
+					</div>
+
+					<div class=" col-2 input-group m-0 p-0 pr-1">
+						<div class="input-group-prepend col-4 m-0 p-0">
+							<span class="input-group-text flex-fill p-0 p-0">&nbspДата дог</span>
+						</div>
+						<input disabled="@Model.Disabled" type="date" class="form-control bg-light m-0 p-0" asp-for="@Model.PDNNonCards[nonCardIndex].AccountDate">
+					</div>
+
+					<div class="col-3 input-group m-0 p-0 pr-1">
+						<div class="input-group-prepend col-6 m-0 p-0">
+							<span class="input-group-text flex-fill p-0 p-0">&nbspДата фин плат</span>
+						</div>
+						<input disabled="@Model.Disabled" type="date" class="form-control bg-light m-0 p-0" asp-for="@Model.PDNNonCards[nonCardIndex].PaymentDueDate">
+					</div>
+
+					<div class="col-2 input-group m-0 p-0 pr-1">
+						<div class="input-group-prepend col-6 m-0 p-0">
+							<span class="input-group-text flex-fill p-0 p-0">&nbspПросрочено</span>
+						</div>
+						<input disabled="@Model.Disabled" type="text" class="form-control bg-light" asp-for="@Model.PDNNonCards[nonCardIndex].AmtPastDue">
+					</div>
+
+					<div class="col-1 m-0 p-0">
+						<div class=" col-12 input-group m-0 p-0">
+							<span class="input-group-text flex-fill p-0 p-0 col-8">&nbspНет СРЗ</span>
+							<input disabled="@Model.Disabled" class="form-control bg-light col-4" type="checkbox" asp-for="@Model.PDNNonCards[nonCardIndex].NoSrz" />
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		}
+
+	</div>
+</div>}

@@ -1,0 +1,53 @@
+﻿@model NBCH_ASP.Models.Registrar.RegistrarDocuments.RegistrarDocumentsIndex
+
+@{Layout = "_LayoutRegistrar";
+ViewData["RegistrarMenuItem"]	= "Archive";}
+
+<div class="text-danger">
+	@foreach (var errorMessage in Model?.Errors ?? new string[0]) {
+		@Html.Raw($"{errorMessage}\n")
+	}
+</div>
+<div class="col-12">
+	<form method="post" enctype="multipart/form-data" name="ServiceRegistrarMainForm">
+		<input type="hidden" id="controller" value="ServiceRegistrarDocuments">
+		<div class="row">
+			<div class="col-12 ml-3">
+				<div class="row">
+
+					<div class="col-7 input-group">
+						<div class="input-group-prepend col-4 m-0 p-0">
+							<span class="input-group-text flex-fill">Номер договора</span>
+						</div>
+						<input class="form-control col-4" type="text" asp-for="@Model.Account1CCode" name="Account1CCode" id="Account1CCode" />
+						<button type="submit" class="form-control btn btn-info col-4">Получить список документов</button>
+					</div>
+
+					<div class="col-5 input-group">
+						<div class="input-group-prepend m-0 p-0">
+							<span class="input-group-text flex-fill p-0 m-0">&nbsp;Основной сервер&nbsp;</span>
+						</div>
+						@Html.DropDownList("RegionWebServiceListName", Model.RegionsWebServiceListName ?? new SelectList(""), new { @class = "form-control" })
+					</div>
+				</div>
+
+
+				<div class="row mt-5 ml-1">
+					<div class="col-12">
+						@await Component.InvokeAsync("AccountList", new { region = Model.RegionsWebServiceListName.SelectedValue, accountStatus = new SOAP1C.AccountStatus[] { SOAP1C.AccountStatus.Verification, SOAP1C.AccountStatus.CheckSB, SOAP1C.AccountStatus.New, SOAP1C.AccountStatus.OnClientAssign } })
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12 mt-2">
+						@foreach (Client client in Model?.Clients ?? new Client[0]) {
+							@await Component.InvokeAsync("RegistrarClientDocuments", new { Client = client, Account1CCode = Model.Account1CCode })
+						}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</form>
+</div>
+

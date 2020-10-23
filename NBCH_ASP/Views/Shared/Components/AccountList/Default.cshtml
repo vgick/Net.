@@ -1,0 +1,35 @@
+﻿@using NBCH_LIB
+@model AccountList
+
+	<div class="row">
+		@{
+			Dictionary<Organization.Organizations, bool> orgs = (Dictionary<Organization.Organizations, bool>)ViewData["orgs"];
+			string visibility   = orgs.Keys.Count > 1 ? default : "style='visibility: hidden'";
+		}
+
+		@for (int itemIndex = 0; itemIndex < Enum.GetNames(typeof(Organization.Organizations)).Length; itemIndex++) {
+			bool orgEnabled = orgs.Keys.Contains((Organization.Organizations)itemIndex);
+			if (orgEnabled) {
+				string itemChecked = orgs[(Organization.Organizations)itemIndex] ? "checked" : default;
+
+				<div class="col-2">
+					<input @Html.Raw(visibility) type="checkbox" class="form-check-input" onclick="account_list_module.UpdateAccountTable()" id='@Html.Raw($"org{itemIndex}")' name='orgs' checked="@itemChecked" value="@((Organization.Organizations)itemIndex)">
+					<label @Html.Raw(visibility) class="form-check-label" for='@Html.Raw($"org{itemIndex}")'>@(((Organization.Organizations)itemIndex).GetDisplayName())</label>
+				</div>
+			}
+		}
+
+		@if (orgs.Keys.Count > 0) {
+			<div class="col-8">
+				<input type="button" class="btn btn-light float-lg-right" onclick="account_list_module.UpdateAccountTable()" value="обновить" />
+			</div>
+		}
+	</div>
+
+<div class="row mt-2">
+	<div class="col-12">
+		@await Component.InvokeAsync("AccountTable", new { region = Model.Region, orgs = orgs, accountStatus = Model.AccountStatus })
+	</div>
+</div>
+
+<script src="~/js/account_list.js" asp-append-version="true"></script>

@@ -1,0 +1,29 @@
+﻿@model NBCH_ASP.Models.PDF.ADUsers.ADUsersIndexModel
+@{Layout = "_LayoutAdmin";}
+@{ViewData["SelectedMenuItem"] = "ADUsersList";}
+
+<form method="post">
+	
+
+	<div class="col-10 text-center">
+			<label>Всего в базе &nbsp;<b>@Model?.RecordCount</b>&nbsp; ползователей</label>
+			<a class="btn btn-secondary  btn-sm" asp-action="AddADUser" asp-controller="ADUsers">Добавить</a>
+	</div>
+
+	<div class="input-group mt-2">
+		<div class="input-group-prepend">
+			<span class="input-group-text text-left">Строка для поиска</span>
+		</div>
+		@*<input type="text" class="input-group-text col-8 text-left" asp-for="@Model.SearchString">*@
+		<div class="input-group-append">
+			<input type="submit" class="btn form-control btn-primary" asp-action="Index" asp-controller="ADUsers" value="найти"/>
+		</div>
+	</div>
+	<div class="row">
+		@if (Model?.ADUsers != default) {
+			@foreach (ADUserMVC adUserMVC in Model.ADUsers) {
+				@await Html.PartialAsync("_ADUserCard", adUserMVC)
+			}
+		}
+	</div>
+</form>
